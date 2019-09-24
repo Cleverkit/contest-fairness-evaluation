@@ -1,0 +1,12 @@
+how to start
+go into the right area using mnt/c/Users and so on, starting with the cd command
+go into the directory file contest-fairness-evaluation
+use either edit or echo to make and edit files
+use the I key to edit, and escape to stop editing 
+:w will save and :q will exit the file
+after finishing everything, you need to git add the files
+then git commit
+then git push and log in
+boom
+ya did it
+
