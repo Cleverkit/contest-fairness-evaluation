@@ -21,17 +21,22 @@ def add_contestant(cur, contest, graph, background, nam):
 @decorator
 def reset_contestant_table(cur):
     cur.execute("drop table if exists contestantinfo;")
-    cur.execute("create table contestantinfo (contestantid serial primary key, contestid integer not null, graphic text not null, backgroundinfo text not null, name text not null);")
+    cur.execute("create table contestantinfo (id serial primary key, contestid integer not null, graphic text not null, backgroundinfo text not null, name text not null);")
 
 @decorator
 def reset_voter_table(cur):
-    cur.execute("drop table if exists voterinfo;")
-    cur.execute("create table voterinfo (voter serial primary key, ip inet not null, target integer not null, timestamp timestamptz not null);")
+    destroy_table("voterinfo")
+    print("destroyed")
+    create_table("voterinfo", {"ip":"inet not null", "target":"integer not null", "timestamp":"timestamptz not null"})
+    print("created")
 
 @decorator
 def reset_contest_table(cur):
-    cur.execute("drop table if exists contestinfo;")
-    cur.execute("create table contestinfo (id serial primary key, description text not null, name text not null);")
+    print("begun")
+    destroy_table("contestinfo")
+    print("destroyed")
+    create_table("contestinfo", {"description":"text not null", "name":"text not null"})
+    print("created")
 
 @decorator
 def add_contest(cur, description, name):
@@ -58,5 +63,5 @@ def create_table(cur, name, dinfo):
 
 @decorator
 def destroy_table(cur, name):
-    cur.execute(f"drop table if exists {name}")
+    cur.execute(f"drop table if exists {name};")
 
