@@ -1,6 +1,7 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 import server
+import json
 
 DEBUG = True
 
@@ -13,9 +14,15 @@ CORS(app, resources={r'/*': {'origins': "*"}})
 def ping_pong():
     return jsonify('pong!')
 
-@app.route('/api', methods=['GET, POST'])
+@app.route('/api', methods=['GET', 'POST'])
 def api():
-    return ("None")
+    data=request.args
+    data=dict(data)
+    action=data['command']
+    del data['command']
+    print (data)
+    return(str(server.processjson(json.dumps(data), action)))
+    
 
 
 if __name__ == '__main__':
