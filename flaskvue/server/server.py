@@ -30,6 +30,8 @@ def processjson(myjson, action):
         return db_wrapper.find_contestants(myjson["contestid"])
     elif action=="find_votes":
         return db_wrapper.find_votes(myjson["target"])
+    elif action=="find_contest":
+        return db_wrapper.find_contest(myjson.get("id"))
     elif action=="create_table":
         del myjson["command"]
         name=myjson["name"]
@@ -37,5 +39,5 @@ def processjson(myjson, action):
         db_wrapper.create_table(name, myjson)
         return db_wrapper.get_table(name)
     else:
-        return ("No action found")
+        return (action+" action not found")
 

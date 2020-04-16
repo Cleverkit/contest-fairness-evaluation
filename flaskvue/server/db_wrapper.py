@@ -76,19 +76,24 @@ def destroy_table(cur, name):
 
 @decorator
 def get_table(cur, name):
-    cur.execute(f"select * from {name};")
+    cur.execute(f"select json_agg(t) from ( select * from {name}) t;")
     notes=cur.fetchall()
     return notes
 
 @decorator
 def find_contestants(cur, contestid):
-    cur.execute(f"select * from contestantinfo where contestid={contestid};")
+    cur.execute(f"select json_agg(t) from ( select * from contestantinfo where contestid={contestid}) t;")
     notes=cur.fetchall()
     return notes
 
 @decorator
 def find_votes(cur, target):
-    cur.execute(f"select * from voterinfo where target={target};")
+    cur.execute(f"select json_agg(t) from ( select * from voterinfo where target={target}) t;")
     notes=cur.fetchall()
     return notes
 
+@decorator
+def find_contest(cur, target):
+    cur.execute(f"select json_agg(t) from ( select * from contestinfo where id={target}) t;")
+    notes=cur.fetchall()
+    return notes
